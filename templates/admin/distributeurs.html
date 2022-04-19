@@ -1,0 +1,139 @@
+{% extends 'includes/layout.html' %}
+{% block content %}
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card my-4">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <h6 class="text-white text-capitalize ps-3">Listes des distributeurs</h6>
+                                </div>
+                                <div class="col-lg-3">
+                                    <form method="post" action="{{ url_for('distributeurs') }}">
+                                        <div class="input-group btn-instagram">
+                                            <input type="email" name="email" class="form-control px-1"
+                                                   placeholder="Email du distrinuteur"
+                                                   style="background-color: white; height: 40px">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-linkedin" type="submit">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-lg-3">
+                                    <form method="POST" action="{{ url_for('distributeurs') }}">
+                                        <div class="input-group btn-instagram">
+                                            <select name="etat" class="form-control"
+                                                    style="background-color: white; height: 40px">
+                                                <option value="all">All</option>
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-linkedin" type="submit">
+                                                    <i class="fa fa-paper-plane"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="">
+                                        <div class="float-right">
+                                            <a href="{{ url_for('dashboard') }}"
+                                               class="btn btn-instagram btn-sm text-white">
+                                                <i class="fas fa-plus"></i> Ajouter un distributeurs
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Nom
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Prenom
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Email
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            etat
+                                        </th>
+                                        <th class="text-secondary opacity-7"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for distributeur in distributeurs %}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="{{ url_for('static', filename='assets/img/team-2.jpg') }}"
+                                                             class="avatar avatar-sm me-3 border-radius-lg"
+                                                             alt="user1">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm"> {{ distributeur.nom }} </h6>
+                                                        <p class="text-xs text-secondary mb-0">{{ distributeur.email }}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ distributeur.etat }}</p>
+                                                <p class="text-xs text-secondary mb-0">{{ distributeur.email }}</p>
+                                            </td>
+                                        <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">{{ distributeur.email }}</span>
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                            <span class="badge badge-sm       {% if distributeur.etat == True %}
+                                                    bg-gradient-success
+                                                {% else %}
+                                                    bg-gradient-secondary
+                                                {% endif %} ">
+
+                                                {% if distributeur.etat == True %}
+                                                    Actif
+                                                {% else %}
+                                                    Bloqué
+                                                {% endif %}
+                                            </span>
+                                            </td>
+
+                                            <td class="align-middle">
+                                                <a href="{{ url_for('distributeur', id=distributeur.id) }}"
+                                                   class="text-secondary font-weight-bold text-xs btn"
+                                                   data-toggle="tooltip" data-original-title="Edit user">
+                                                    {% if distributeur.etat == True %}
+                                                        Bloqué
+                                                    {% else %}
+                                                        Débloqué
+                                                    {% endif %}
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
